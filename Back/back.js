@@ -2,9 +2,10 @@
 require('dotenv').config();
 
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const{MongoClient} = require("mongodb");
-const url = "mongodb://localhost:27017/student"
+const url = "mongodb://localhost:27017/studentData"
 const databse = 'studentData'
 const client = new MongoClient(url);
 async function getdata() {
@@ -21,7 +22,7 @@ const app = express();
 const port = process.env.PORT || 3010;
 app.use(cors());
 app.use(express.json());
-
+app.use(express.static(path.join(__dirname, '..', 'fromt', 'build')));
 mongoose.connect('mongodb://localhost:27017/studentData');
 
 const studentSchema = new mongoose.Schema({
@@ -45,6 +46,9 @@ app.get('/view', async (req, res) => {
       } catch (error) {
         res.status(500).json({ message: error.message });
       }
+});
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'frontend', 'build', 'form.js'));
 });
 
 app.delete('/delete', async (req, res) => {
