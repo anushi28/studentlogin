@@ -18,7 +18,7 @@ export const Form = () => {
     console.log(name, age,  course);
 
     try {
-      const result = await fetch('https://student-login-3jpw.onrender.com', {
+      const result = await fetch('https://studentlogin-adwd.onrender.com', {
         method: 'POST',
         body:JSON.stringify({ name, age, course }),
         headers: {
